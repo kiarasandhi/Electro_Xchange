@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
-    EditText editEmail, editPass;
+    EditText editEmail, editPass, editName;
     Button bRegis, bLogin;
     RequestQueue requestQueue;
     String URL = "http://192.168.0.104/mobapp/register.php";
@@ -34,6 +34,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        editName = findViewById(R.id.editName);
         editEmail = findViewById(R.id.editTextTextEmailAddress2);
         editPass = findViewById(R.id.editTextTextPassword2);
         bRegis = findViewById(R.id.button3);
@@ -53,10 +54,15 @@ public class Register extends AppCompatActivity {
         bRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email, pass;
+                String name, email, pass;
+                name = editName.getText().toString();
                 email = editEmail.getText().toString();
                 pass = editPass.getText().toString();
 
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(Register.this, "Enter Full Name", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(Register.this, "Enter Email", Toast.LENGTH_LONG).show();
                     return;
@@ -65,14 +71,12 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Enter Password", Toast.LENGTH_LONG).show();
                     return;
                 }
-
-                // Call method to register
-                registerUser(email, pass);
+                registerUser(name, email, pass);
             }
         });
     }
 
-    private void registerUser(final String email, final String password) {
+    private void registerUser(final String name, final String email, final String password) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -96,6 +100,7 @@ public class Register extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
+                params.put("fullName", name);
                 params.put("email", email);
                 params.put("password", password);
                 return params;
