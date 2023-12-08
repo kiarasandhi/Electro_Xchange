@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ElectroXchange"
         tools:targetApi="31">
         <activity
+            android:name=".Products"
+            android:exported="false" />
+        <activity
             android:name=".transaction"
             android:exported="false" />
         <activity

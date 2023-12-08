@@ -74,19 +74,6 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/button12"
-            android:layout_width="184dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#FFFFFF"
-            android:gravity="right"
-            android:text="Reset Password"
-            android:textColor="#000000"
-            app:cornerRadius="10dp" />
-
-        <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
