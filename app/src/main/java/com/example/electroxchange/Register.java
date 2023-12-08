@@ -1,6 +1,5 @@
 package com.example.electroxchange;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,25 +10,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
     EditText editEmail, editPass;
     Button bRegis, bLogin;
-    FirebaseAuth auth;
+    RequestQueue requestQueue;
+    String URL = "http://192.168.0.104/mobapp/register.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        auth = FirebaseAuth.getInstance();
         editEmail = findViewById(R.id.editTextTextEmailAddress2);
         editPass = findViewById(R.id.editTextTextPassword2);
         bRegis = findViewById(R.id.button3);
         bLogin = findViewById(R.id.button4);
+
+        requestQueue = Volley.newRequestQueue(this);
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +49,7 @@ public class Register extends AppCompatActivity {
                 finish();
             }
         });
+
         bRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,20 +66,42 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-                auth.createUserWithEmailAndPassword(email, pass)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Register Success.",
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Register.this, "Register Failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                // Call method to register
+                registerUser(email, pass);
             }
         });
+    }
+
+    private void registerUser(final String email, final String password) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+                            Toast.makeText(Register.this, message, Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Register.this, "JSON Exception: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Register.this, "Volley Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 }
