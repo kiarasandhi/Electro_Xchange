@@ -99,7 +99,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="#4E4A45"
-            android:text="Login"
+            android:text="Register"
             app:cornerRadius="10dp" />
 
         <TextView
@@ -119,7 +119,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="#4E4A45"
-            android:text="Register"
+            android:text="Login"
             app:cornerRadius="10dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
