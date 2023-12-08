@@ -132,7 +132,7 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Harga produk"
-            android:inputType="text" />
+            android:inputType="number" />
 
         <Button
             android:id="@+id/button8"

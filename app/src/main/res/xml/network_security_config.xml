@@ -2,7 +2,8 @@
 <network-security-config>
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
-            <!-- Specify your certificates here if needed -->
-        </trust-anchors>
+            <domain-config cleartextTrafficPermitted="true">
+                <domain includeSubdomains="true">192.168.1.4</domain>
+            </domain-config>        </trust-anchors>
     </base-config>
 </network-security-config>

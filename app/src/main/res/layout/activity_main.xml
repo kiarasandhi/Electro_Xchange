@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:background="@drawable/top_background"
                 android:orientation="vertical">
 
@@ -81,20 +81,6 @@
                         android:src="@drawable/bell" />
 
                 </LinearLayout>
-
-                <EditText
-                    android:id="@+id/editTextText2"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@drawable/edittext_background"
-                    android:drawableEnd="@drawable/search_icon"
-                    android:drawablePadding="8dp"
-                    android:hint="Cari apa?"
-                    android:inputType="text"
-                    android:padding="8dp" />
 
             </LinearLayout>
 
@@ -216,7 +202,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="0dp"
-                        android:text="Best Sales"
+                        android:text="Recent Products"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
