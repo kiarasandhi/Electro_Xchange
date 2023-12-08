@@ -10,24 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class Login extends AppCompatActivity {
     EditText editEmail, editPass;
     Button bLogin, bRegis;
-    RequestQueue requestQueue;
-    String URL = "http://192.168.0.104/mobapp/login.php"; // Replace with your PHP script URL
+    MyDBHandler myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +25,7 @@ public class Login extends AppCompatActivity {
         bLogin = findViewById(R.id.button);
         bRegis = findViewById(R.id.button2);
 
-        requestQueue = Volley.newRequestQueue(this);
+        myDB = new MyDBHandler(this);
 
         bRegis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,49 +50,22 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Enter Password", Toast.LENGTH_LONG).show();
                     return;
                 }
-                loginUser(email, pass);
+
+                int userId = myDB.getUserId(email, pass);
+
+                if (userId != -1) {
+                    Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_LONG).show();
+
+                    Intent mainIntent = new Intent(Login.this, MainActivity.class);
+                    mainIntent.putExtra("USER_EMAIL", email);
+                    mainIntent.putExtra("USER_ID", userId);
+
+                    startActivity(mainIntent);
+                    finish();
+                } else {
+                    Toast.makeText(Login.this, "Invalid Credentials", Toast.LENGTH_LONG).show();
+                }
             }
         });
-    }
-
-    private void loginUser(final String email, final String password) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
-                            Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
-
-                            if (message.equals("Login successful")) {
-                                // Redirect to the main activity or any other activity upon successful login
-                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                intent.putExtra("USER_EMAIL", email);
-                                startActivity(intent);
-                                finish();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Login.this, "JSON Exception: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Login.this, "Volley Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("password", password);
-                return params;
-            }
-        };
-
-        requestQueue.add(stringRequest);
     }
 }
