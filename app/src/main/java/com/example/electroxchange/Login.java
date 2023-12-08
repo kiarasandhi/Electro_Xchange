@@ -82,6 +82,7 @@ public class Login extends AppCompatActivity {
                             if (message.equals("Login successful")) {
                                 // Redirect to the main activity or any other activity upon successful login
                                 Intent intent = new Intent(Login.this, MainActivity.class);
+                                intent.putExtra("USER_EMAIL", email);
                                 startActivity(intent);
                                 finish();
                             }
