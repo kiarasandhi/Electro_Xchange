@@ -10,24 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class Register extends AppCompatActivity {
     EditText editEmail, editPass, editName;
     Button bRegis, bLogin;
-    RequestQueue requestQueue;
-    String URL = "http://192.168.0.104/mobapp/register.php";
+    MyDBHandler myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +26,7 @@ public class Register extends AppCompatActivity {
         bRegis = findViewById(R.id.button3);
         bLogin = findViewById(R.id.button4);
 
-        requestQueue = Volley.newRequestQueue(this);
+        myDB = new MyDBHandler(this);
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,42 +57,17 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Enter Password", Toast.LENGTH_LONG).show();
                     return;
                 }
-                registerUser(name, email, pass);
+
+                // Assuming you have a method in MyDBHandler to add user to database
+                long result = myDB.addUser(name, email, pass);
+
+                if (result != -1) {
+                    Toast.makeText(Register.this, "Registration Successful", Toast.LENGTH_LONG).show();
+                    // You can navigate to another activity or perform further actions upon successful registration
+                } else {
+                    Toast.makeText(Register.this, "Failed to Register", Toast.LENGTH_LONG).show();
+                }
             }
         });
-    }
-
-    private void registerUser(final String name, final String email, final String password) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
-                            Toast.makeText(Register.this, message, Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Register.this, "JSON Exception: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Register.this, "Volley Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("fullName", name);
-                params.put("email", email);
-                params.put("password", password);
-                return params;
-            }
-        };
-
-        requestQueue.add(stringRequest);
     }
 }
