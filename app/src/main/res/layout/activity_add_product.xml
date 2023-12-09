@@ -63,16 +63,13 @@
             android:layout_marginBottom="10dp"
             android:text="Kategori Produk" />
 
-        <EditText
-            android:id="@+id/editTextText5"
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:hint="Kategori produk"
-            android:inputType="text" />
+            android:layout_marginBottom="10dp" />
 
         <TextView
             android:id="@+id/textView18"

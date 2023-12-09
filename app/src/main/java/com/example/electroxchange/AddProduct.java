@@ -1,16 +1,19 @@
 package com.example.electroxchange;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Spinner;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AddProduct extends AppCompatActivity {
-    EditText editProductName, editCategory, editDescription, editQuantity, editPrice;
+    EditText editProductName, editDescription, editQuantity, editPrice;
     Button buttonAddProduct;
     MyDBHandler myDB;
     @Override
@@ -19,11 +22,16 @@ public class AddProduct extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
 
         editProductName = findViewById(R.id.editTextText4);
-        editCategory = findViewById(R.id.editTextText5);
         editDescription = findViewById(R.id.editTextText7);
         editQuantity = findViewById(R.id.editTextNumber);
         editPrice = findViewById(R.id.editTextText6);
         buttonAddProduct = findViewById(R.id.button8);
+
+        Spinner categorySpinner  = findViewById(R.id.spinner);
+
+        String[] items = {"phone", "tablet", "laptop"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        categorySpinner .setAdapter(adapter);
 
         myDB = new MyDBHandler(this);
         int currentUserId = getIntent().getIntExtra("USER_ID", -1);
@@ -32,7 +40,7 @@ public class AddProduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String product_name = editProductName.getText().toString();
-                String category = editCategory.getText().toString();
+                String category = categorySpinner.getSelectedItem().toString();
                 String description = editDescription.getText().toString();
                 int quantity = Integer.parseInt(editQuantity.getText().toString());
                 double price = Double.parseDouble(editPrice.getText().toString());
@@ -49,11 +57,11 @@ public class AddProduct extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void clearFields() {
         editProductName.setText("");
-        editCategory.setText("");
         editDescription.setText("");
         editQuantity.setText("");
         editPrice.setText("");

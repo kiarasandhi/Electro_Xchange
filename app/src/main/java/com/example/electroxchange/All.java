@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class phone extends AppCompatActivity {
+public class All extends AppCompatActivity {
     ImageView profile, home, transaction, cart;
     TextView textViewEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phone);
+        setContentView(R.layout.activity_all);
 
         textViewEmail = findViewById(R.id.textView13);
         String userEmail = getIntent().getStringExtra("USER_EMAIL");
@@ -32,7 +32,7 @@ public class phone extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(phone.this, profile.class);
+                Intent intent = new Intent(All.this, profile.class);
                 intent.putExtra("USER_ID", userId);
                 intent.putExtra("USER_EMAIL", userEmail);
                 startActivity(intent);
@@ -41,7 +41,7 @@ public class phone extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(phone.this, MainActivity.class);
+                Intent intent = new Intent(All.this, MainActivity.class);
                 intent.putExtra("USER_ID", userId);
                 intent.putExtra("USER_EMAIL", userEmail);
                 startActivity(intent);
@@ -50,7 +50,7 @@ public class phone extends AppCompatActivity {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(phone.this, Cart.class);
+                Intent intent = new Intent(All.this, Cart.class);
                 intent.putExtra("USER_ID", userId);
                 intent.putExtra("USER_EMAIL", userEmail);
                 startActivity(intent);
@@ -59,7 +59,7 @@ public class phone extends AppCompatActivity {
         transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(phone.this, TransactionActivity.class);
+                Intent intent = new Intent(All.this, TransactionActivity.class);
                 intent.putExtra("USER_ID", userId);
                 intent.putExtra("USER_EMAIL", userEmail);
                 startActivity(intent);
@@ -69,9 +69,9 @@ public class phone extends AppCompatActivity {
         ListView listView = findViewById(R.id.list);
 
         MyDBHandler myDB = new MyDBHandler(this);
-        ArrayList<Products> laptopItems = myDB.getProductsByCategory("phone");
+        ArrayList<Products> productList = myDB.getAllProducts();
 
-        ProductAdapter adapter = new ProductAdapter(this, laptopItems);
+        ProductAdapter adapter = new ProductAdapter(this, productList);
         listView.setAdapter(adapter);
     }
 }

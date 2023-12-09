@@ -35,13 +35,10 @@ public class PengaturanAkun extends AppCompatActivity {
         String newEmail = editTextNewEmail.getText().toString().trim();
         String newFullName = editTextNewFullName.getText().toString().trim();
         String newPassword = editTextNewPassword.getText().toString().trim();
-
-        // Assuming you have a method in your MyDBHandler class to update user details
         boolean updated = myDB.updateUserDetails(newEmail, newFullName, newPassword);
 
         if (updated) {
             Toast.makeText(this, "Details updated successfully", Toast.LENGTH_SHORT).show();
-            // You can also add further actions like reloading the user details or finishing this activity
         } else {
             Toast.makeText(this, "Failed to update details", Toast.LENGTH_SHORT).show();
         }
