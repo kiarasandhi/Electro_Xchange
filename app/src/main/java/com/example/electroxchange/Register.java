@@ -58,12 +58,10 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-                // Assuming you have a method in MyDBHandler to add user to database
                 long result = myDB.addUser(name, email, pass);
 
                 if (result != -1) {
                     Toast.makeText(Register.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                    // You can navigate to another activity or perform further actions upon successful registration
                 } else {
                     Toast.makeText(Register.this, "Failed to Register", Toast.LENGTH_LONG).show();
                 }

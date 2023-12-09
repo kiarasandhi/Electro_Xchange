@@ -9,40 +9,34 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 // ProductAdapter class to populate the ListView with products
-public class ProductAdapter extends ArrayAdapter<Product> {
+public class ProductAdapter extends ArrayAdapter<Products> {
 
-    private ArrayList<Product> productList;
+    private ArrayList<Products> productList;
 
-    public ProductAdapter(Context context, ArrayList<Product> productList) {
+    public ProductAdapter(Context context, ArrayList<Products> productList) {
         super(context, 0, productList);
         this.productList = productList;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        Product product = getItem(position);
+        Products product = getItem(position);
 
-        // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_layout, parent, false);
         }
 
-        // Lookup view for data population
         TextView productName = convertView.findViewById(R.id.productName);
         TextView category = convertView.findViewById(R.id.category);
         TextView description = convertView.findViewById(R.id.description);
         TextView quantity = convertView.findViewById(R.id.quantity);
         TextView price = convertView.findViewById(R.id.price);
 
-        // Populate the data into the template view using the data object
         productName.setText(product.getProductName());
         category.setText(product.getCategory());
         description.setText(product.getDescription());
         quantity.setText(String.valueOf(product.getQuantity()));
         price.setText(String.valueOf(product.getPrice()));
-
-        // Return the completed view to render on screen
         return convertView;
     }
 }
