@@ -46,12 +46,16 @@
         <EditText
             android:id="@+id/editName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_edittext"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView7"
@@ -65,12 +69,16 @@
         <EditText
             android:id="@+id/editTextTextEmailAddress2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_edittext"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView8"
@@ -84,12 +92,16 @@
         <EditText
             android:id="@+id/editTextTextPassword2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_edittext"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button3"
